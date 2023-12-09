@@ -12,12 +12,52 @@ import reviews from "../Data";
 import { useState } from "react";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 export default function Review() {
   const [index, setIndex] = useState(0);
   const { name, job, image, text } = reviews[index];
-  console.log(reviews[1].name);
+
+
+  const prevPerson = () => {
+    const newIndex = index - 1;
+
+      if (newIndex < 0) {
+        setIndex(reviews.length - 1);
+      } else {
+        setIndex(newIndex);
+      }
+
+  };
+
+  const nextPerson = () => {
+    const newIndex = index + 1;
+
+      if (newIndex > reviews.length - 1) {
+        setIndex(0);
+      }else {
+        setIndex(newIndex);
+      }
+
+  };
+
+  const randomPerson = () => {
+    const randomPerson = Math.floor(Math.random() * reviews.length);
+    
+      if (randomPerson === index) {
+        setIndex(index + 1);
+      }
+      if (randomPerson > reviews.length - 1) {
+        setIndex(0);
+      }
+      if (randomPerson < 0) {
+        setIndex(reviews.length - 1) ;
+      }else{
+        setIndex(randomPerson)
+      }
+    
+
+  };
 
   return (
     <Card
@@ -56,11 +96,20 @@ export default function Review() {
             src={image}
           />
         </Badge>
-        <Typography sx={{fontWeight: "800"}} gutterBottom variant="h5" component="div">
+        <Typography
+          sx={{ fontWeight: "800" }}
+          gutterBottom
+          variant="h5"
+          component="div"
+        >
           {name}
         </Typography>
         <Typography
-          sx={{ mt: "-10px", color: "hsl(205, 78%, 60%)" }}
+          sx={{
+            mt: "-10px",
+            color: "hsl(205, 78%, 60%)",
+            textTransform: "uppercase",
+          }}
           gutterBottom
           variant="h5"
           component="div"
@@ -71,17 +120,30 @@ export default function Review() {
           {text}
         </Typography>
       </CardContent>
-      <CardActions sx={{ display: "flex", justifyContent:"center", flexDirection: "column", mt: "-20px"}}>
+      <CardActions
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          mt: "-20px",
+        }}
+      >
         <div>
-            <IconButton sx={{color:"hsl(205, 78%, 60%)"}} aria-label="delete">
-                <ArrowBackIosNewIcon />
-            </IconButton>
-            <IconButton sx={{color:"hsl(205, 78%, 60%)"}} aria-label="delete">
-                <ArrowForwardIosSharpIcon />
-            </IconButton>
+          <IconButton sx={{ color: "hsl(205, 78%, 60%)" }} onClick={prevPerson}>
+            <ArrowBackIosNewIcon />
+          </IconButton>
+          <IconButton sx={{ color: "hsl(205, 78%, 60%)" }} onClick={nextPerson}>
+            <ArrowForwardIosSharpIcon />
+          </IconButton>
         </div>
-        
-        <Button sx={{color: "hsl(205, 78%, 60%)", mb: 1, mt: 1}} variant="outlined">Random Review</Button>
+
+        <Button
+          sx={{ color: "hsl(205, 78%, 60%)", mb: 1, mt: 1 }}
+          variant="outlined"
+          onClick={randomPerson}
+        >
+          Random Review
+        </Button>
       </CardActions>
     </Card>
   );
