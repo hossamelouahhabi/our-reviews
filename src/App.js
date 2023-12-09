@@ -1,24 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
+import { Button, Container, ThemeProvider, createTheme } from '@mui/material';
+import Review from './components/Review';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Popping"]
+  }
+})
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth='sm' sx={{textAlign: "center", mt: "15rem"}}>
+        <div >
+          <h2>Our Reviews</h2>
+          <div className='underline'></div>
+        </div>
+        <Review />
+      </Container>
+    </ThemeProvider>
   );
 }
 
